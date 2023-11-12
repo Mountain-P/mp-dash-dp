@@ -19,7 +19,7 @@ broker_username = "rong"
 broker_password = "00008888"
 
 subprocess.Popen(
-    ['chromium-browser', '--kiosk', '--display=:0', '--noerrdialogs', '--window-position=0,0','--no-sandbox', dashboard_web_url])
+    ['chromium-browser', '--kiosk', '--display=:0', '--noerrdialogs', '--window-position=0,0', '--no-sandbox', dashboard_web_url])
 
 #####################
 
@@ -70,6 +70,7 @@ topicWebDashbaord = "mountainp/team_dash/all/web_dashboard"
 topicALLWebDashbaord = "mountainp/team_dash/" + dashboard_id + "/web_dashboard"
 topicReloadBoot = "mountainp/team_dash/all/reload_boot"
 topicReloadBootID = "mountainp/team_dash/" + dashboard_id + "/reload_boot"
+topicMouse = "mountainp/team_dash/all/mouse"
 
 client.subscribe(topicLed)
 client.subscribe(topicAllGetInfo)
@@ -77,6 +78,7 @@ client.subscribe(topicWebDashbaord)
 client.subscribe(topicALLWebDashbaord)
 client.subscribe(topicReloadBoot)
 client.subscribe(topicReloadBootID)
+client.subscribe(topicMouse)
 
 mqttbreak = False
 
@@ -242,11 +244,21 @@ def on_message(client, userdata, msg):
             except KeyError:
                 data["url"] = dashboard_web_url
             subprocess.Popen(
-               ['chromium-browser', '--kiosk', '--noerrdialogs', '--window-position=0,0','--no-sandbox', dashboard_web_url])
+                ['chromium-browser', '--kiosk', '--noerrdialogs', '--window-position=0,0', '--no-sandbox', dashboard_web_url])
         elif (data["set"] == "off"):
             subprocess.Popen(['killall', 'chromium-browser'])
     if (msg.topic == topicReloadBoot or msg.topic == topicReloadBootID):
-        subprocess.Popen(['sudo', 'systemctl','restart','boot.service'])
+        subprocess.Popen(['sudo', 'systemctl', 'restart', 'boot.service'])
+    if (msg.topic == topicMouse):
+        data = json.loads(msg.payload)
+        try:
+            data["set"]
+        except KeyError:
+            data["set"] = ""
+        if (data["set"] == "on"):
+            subprocess.Popen(['unclutter', '-idle', '0'])
+        elif (data["set"] == "off"):
+            subprocess.Popen(['killall', 'unclutter'])
 
 
 client.on_message = on_message
