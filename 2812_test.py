@@ -19,7 +19,7 @@ broker_username = "rong"
 broker_password = "00008888"
 
 subprocess.Popen(
-    ['chromium-browser', '--kiosk', '--incognito', '--window-position=0,0', dashboard_web_url])
+    ['chromium-browser', '--kiosk', '--noerrdialogs', '--window-position=0,0', dashboard_web_url])
 
 #####################
 
