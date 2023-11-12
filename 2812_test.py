@@ -13,7 +13,7 @@ import socket
 
 #####################
 dashboard_id = socket.gethostname()
-dashboard_web_url = "https://apple.com/tw"
+dashboard_web_url = "http://192.168.31.82/dashboard/?_id"+dashboard_id
 broker = "192.168.0.37"
 broker_username = "rong"
 broker_password = "00008888"
