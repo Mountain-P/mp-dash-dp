@@ -250,6 +250,7 @@ def on_message(client, userdata, msg):
     if (msg.topic == topicReloadBoot or msg.topic == topicReloadBootID):
         subprocess.Popen(['sudo', 'systemctl', 'restart', 'boot.service'])
     if (msg.topic == topicMouse):
+        os.system("sudo apt install unclutter")
         data = json.loads(msg.payload)
         try:
             data["set"]
