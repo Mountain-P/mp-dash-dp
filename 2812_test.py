@@ -68,11 +68,15 @@ topicLed = "mountainp/team_dash/" + dashboard_id + "/ledstrip"
 topicAllGetInfo = "mountainp/team_dash/all/getInfo"
 topicWebDashbaord = "mountainp/team_dash/all/web_dashboard"
 topicALLWebDashbaord = "mountainp/team_dash/" + dashboard_id + "/web_dashboard"
+topicReloadBoot = "mountainp/team_dash/all/reload_boot"
+topicReloadBootID = "mountainp/team_dash/" + dashboard_id + "/reload_boot"
 
 client.subscribe(topicLed)
 client.subscribe(topicAllGetInfo)
 client.subscribe(topicWebDashbaord)
 client.subscribe(topicALLWebDashbaord)
+client.subscribe(topicReloadBoot)
+client.subscribe(topicReloadBootID)
 
 mqttbreak = False
 
@@ -241,6 +245,8 @@ def on_message(client, userdata, msg):
                ['chromium-browser', '--kiosk', '--noerrdialogs', '--window-position=0,0','--no-sandbox', dashboard_web_url])
         elif (data["set"] == "off"):
             subprocess.Popen(['killall', 'chromium-browser'])
+    if (msg.topic == topicReloadBoot or msg.topic == topicReloadBootID):
+        subprocess.Popen(['sudo', 'systemctl','restart','boot.service'])
 
 
 client.on_message = on_message
@@ -267,7 +273,7 @@ while True:
             strip_status = "white_flow"
     elif strip_status == "fade_in_green":
         fade_in_green(0.5)
-        if (current_time - last_time > 2):
+        if (current_time - last_time > 1.2):
             strip_status = "white_flow"
     elif strip_status == "fade_in_blue":
         fade_in_blue(0.24)
