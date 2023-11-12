@@ -256,7 +256,7 @@ def on_message(client, userdata, msg):
         except KeyError:
             data["set"] = ""
         if (data["set"] == "on"):
-            subprocess.Popen(['unclutter', '-idle', '0'])
+            subprocess.Popen(['unclutter', '-display', ':0'])
         elif (data["set"] == "off"):
             subprocess.Popen(['killall', 'unclutter'])
 
