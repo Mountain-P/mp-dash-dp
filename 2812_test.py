@@ -238,7 +238,7 @@ def on_message(client, userdata, msg):
             except KeyError:
                 data["url"] = dashboard_web_url
             subprocess.Popen(
-               ['chromium-browser', '--kiosk', '--display=:0', '--noerrdialogs', '--window-position=0,0','--no-sandbox', dashboard_web_url])
+               ['chromium-browser', '--kiosk', '--noerrdialogs', '--window-position=0,0','--no-sandbox', dashboard_web_url])
         elif (data["set"] == "off"):
             subprocess.Popen(['killall', 'chromium-browser'])
 
