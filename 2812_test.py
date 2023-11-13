@@ -14,9 +14,9 @@ import socket
 #####################
 dashboard_id = socket.gethostname()
 dashboard_web_url = "http://192.168.31.82:3000/dashboard/?_id="+dashboard_id
-broker = "192.168.0.37"
-broker_username = "rong"
-broker_password = "00008888"
+broker = "192.168.30.224"
+broker_username = "hitconctfadmin_mqtt"
+broker_password = "@Aa00008888@Aa83493986"
 
 subprocess.Popen(
     ['chromium-browser', '--kiosk', '--display=:0', '--noerrdialogs', '--window-position=0,0', '--no-sandbox', dashboard_web_url])
@@ -65,6 +65,7 @@ mqtt_heartbeat()
 
 
 topicLed = "mountainp/team_dash/" + dashboard_id + "/ledstrip"
+topicAllLed = "mountainp/team_dash/all/ledstrip"
 topicAllGetInfo = "mountainp/team_dash/all/getInfo"
 topicWebDashbaord = "mountainp/team_dash/all/web_dashboard"
 topicALLWebDashbaord = "mountainp/team_dash/" + dashboard_id + "/web_dashboard"
@@ -73,6 +74,7 @@ topicReloadBootID = "mountainp/team_dash/" + dashboard_id + "/reload_boot"
 topicMouse = "mountainp/team_dash/all/mouse"
 
 client.subscribe(topicLed)
+client.subscribe(topicAllLed)
 client.subscribe(topicAllGetInfo)
 client.subscribe(topicWebDashbaord)
 client.subscribe(topicALLWebDashbaord)
@@ -204,7 +206,7 @@ last_time = time.time()
 
 def on_message(client, userdata, msg):
     global mqttbreak
-    if (msg.topic == topicLed):
+    if (msg.topic == topicLed or msg.topic == topicAllLed):
         mqttbreak = True
         data = json.loads(msg.payload)
         print(data)
