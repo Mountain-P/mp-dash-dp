@@ -279,7 +279,7 @@ while True:
             strip_status = "white_flow"
     elif strip_status == "rainbow_cycle":
         rainbow_cycle(0.001)
-        if (current_time - last_time > 2):
+        if (current_time - last_time > 10):
             strip_status = "white_flow"
     elif strip_status == "fade_in_red":
         fade_in_red(0.1)
