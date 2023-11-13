@@ -13,8 +13,8 @@ import socket
 
 #####################
 dashboard_id = socket.gethostname()
-dashboard_web_url = "http://192.168.31.82:3000/dashboard/?_id="+dashboard_id
-broker = "192.168.30.224"
+dashboard_web_url = "http://10.30.0.114:3000/dashboard/?_id="+dashboard_id
+broker = "10.30.0.114"
 broker_username = "hitconctfadmin_mqtt"
 broker_password = "@Aa00008888@Aa83493986"
 
