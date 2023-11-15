@@ -246,7 +246,7 @@ def on_message(client, userdata, msg):
             except KeyError:
                 data["url"] = dashboard_web_url
             subprocess.Popen(
-                ['chromium-browser', '--kiosk', '--display=:0', '--noerrdialogs', '--window-position=0,0', '--no-sandbox',data["url"]])
+                ['chromium-browser', '--kiosk', '--display=:0', '--noerrdialogs', '--window-position=0,0', '--no-sandbox', data["url"]])
         elif (data["set"] == "off"):
             subprocess.Popen(['killall', 'chromium-browser'])
     if (msg.topic == topicReloadBoot or msg.topic == topicReloadBootID):
@@ -279,7 +279,7 @@ while True:
             strip_status = "white_flow"
     elif strip_status == "rainbow_cycle":
         rainbow_cycle(0.001)
-        if (current_time - last_time > 10):
+        if (current_time - last_time > 20):
             strip_status = "white_flow"
     elif strip_status == "fade_in_red":
         fade_in_red(0.1)
